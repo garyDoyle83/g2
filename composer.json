@@ -1,0 +1,13 @@
+{
+    "autoload": {
+        "psr-4": {
+            "itb\\": "src/"
+        }
+    },
+    "require": {
+        "phpdocumentor/phpdocumentor": "2.*",
+        "mattsmithdev/pdo-crud-for-free": "dev-master"
+    },
+    "scripts":{"phpdoc": "php phpDocumentor.phar -d ./src -t ./src/documentation"
+    }
+}

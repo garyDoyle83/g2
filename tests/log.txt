@@ -1,0 +1,14 @@
+TAP version 13
+ok 1 - ItbTest\MemberTest::testCanCreateMember
+ok 2 - ItbTest\MemberTest::testGetMemberNameAfterSetTestMember
+ok 3 - ItbTest\MemberTest::testGetDescriptionAfterSetFromProvider with data set #0 ('captian kirk', 'captian kirk')
+ok 4 - ItbTest\MemberTest::testGetDescriptionAfterSetFromProvider with data set #1 ('captian ross', 'captian ross')
+ok 5 - ItbTest\PlayerTest::testCanCreatePlayer
+ok 6 - ItbTest\PlayerTest::testGetIdAfterSetPlayerId
+ok 7 - ItbTest\PlayerTest::testGetPlayerNameAfterSetTestPlayer
+ok 8 - ItbTest\PlayerTest::testGetIdAfterSetPlayerDate
+ok 9 - ItbTest\PlayerTest::testGetIdAfterSetPlayerTime
+ok 10 - ItbTest\PlayerTest::testGetDescriptionAfterSetFromProvider with data set #0 ('1', 'harry', '1harry')
+ok 11 - ItbTest\PlayerTest::testGetDescriptionAfterSetFromProvider with data set #1 ('2', 'amanda', '2amanda')
+ok 12 - ItbTest\PlayerTest::testGetDescriptionAfterSetFromProvider with data set #2 ('3', 'toby', '3toby')
+1..12

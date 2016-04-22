@@ -1,0 +1,301 @@
+<?php
+/**
+* main controller
+ */
+
+namespace Itb;
+
+require_once __DIR__ .'/../src/Golf.php';
+require_once __DIR__ .'/../src/GolfRepository.php';
+//require_once __DIR__ .'/../src/Player.php';
+
+/**
+ *main controller class
+ *
+ */
+class MainController
+{
+    /**
+     * this directs to membershipAction() page
+     */
+    function membershipAction()
+    {
+        $pageTitle = 'Membership';
+        $membershipLinkStyle = 'current_page';
+        $isLoggedIn = $this->isLoggedInFromSession();
+        $username = $this->usernameFromSession();
+
+        require_once __DIR__ . '/../templates/membership.php';
+    }
+
+    /**
+     * this directs to contact page
+     *contactAction() link
+     */
+
+    function contactAction()
+    {
+        $pageTitle = 'Contact';
+        $contactLinkStyle = 'current_page';
+        $isLoggedIn = $this->isLoggedInFromSession();
+        $username = $this->usernameFromSession();
+
+        require_once __DIR__ . '/../templates/contact.php';
+    }
+
+    /**
+     * method for indexAction()
+     *this is the home page
+     */
+    function indexAction()
+    {
+        $pageTitle = 'Home';
+        $indexLinkStyle = 'current_page';
+        $isLoggedIn = $this->isLoggedInFromSession();
+        $username = $this->usernameFromSession();
+
+        require_once __DIR__ . '/../templates/index.php';
+    }
+
+    /**
+     * this lists players
+     * this is for playerAction()
+     */
+    function playerAction()
+    {
+        $pageTitle = 'Player Listings';
+        $playerLinkStyle = 'current_page';
+        $isLoggedIn = $this->isLoggedInFromSession();
+        $username = $this->usernameFromSession();
+
+        $players = Player::getAll();
+
+        require_once __DIR__ . '/../templates/players.php';
+
+    }
+    /**
+     * sitemapAction()
+     * this method is for the sitemap
+     *
+     */
+
+    function sitemapAction()
+    {
+        $pageTitle = 'Site Map';
+        $sitemapLinkStyle = 'current_page';
+        $isLoggedIn = $this->isLoggedInFromSession();
+        $username = $this->usernameFromSession();
+
+        require_once __DIR__ . '/../templates/sitemap.php';
+    }
+
+    /**
+     * listAction() lists golf listings
+     *this is the golf repository
+     */
+    function listAction()
+    {
+        $pageTitle = 'Golf listings';
+        $listLinkStyle = 'current_page';
+        $isLoggedIn = $this->isLoggedInFromSession();
+        $username = $this->usernameFromSession();
+
+        $golfRepository = new GolfRepository();
+        $golfs = $golfRepository->getAll();
+
+        require_once __DIR__ . '/../templates/list.php';
+    }
+
+    /**
+     * this is the submit button method
+    *  it will lead to another screen
+    */
+    function submitMessageAction()
+    {
+        $pageTitle = 'submitMessage';
+        $submitMessageLinkStyle = 'current_page';
+        $isLoggedIn = $this->isLoggedInFromSession();
+        $username = $this->usernameFromSession();
+
+
+        $name = filter_input(INPUT_POST, 'name', FILTER_SANITIZE_STRING);
+        $text = filter_input(INPUT_POST, 'text', FILTER_SANITIZE_STRING);
+        $phone = filter_input(INPUT_POST, 'phone', FILTER_SANITIZE_STRING);
+        $email = filter_input(INPUT_POST, 'email', FILTER_SANITIZE_STRING);
+        $password = filter_input(INPUT_POST, 'password', FILTER_SANITIZE_STRING);
+        //$repassword =filter_input(INPUT_POST,'repassword',FILTER_SANITIZE_STRING);
+
+        $message = 'Thank You ' . $name;
+        $message3 = 'Your handicap : ' . $text;
+        $message4 = 'Your phone number is : ' . $phone;
+        $message5 = 'Your email address is : ' . $email;
+        // $message6='' .$password;
+
+
+        require_once __DIR__ . '/../templates/submitMessage.php';
+
+
+        //do this when submit button is clicked.
+    }
+
+    /**
+     * this is the submit button method for
+     * comments
+     */
+    function submitCommentMessageAction()
+    {
+        $pageTitle = 'submitCommentMessage';
+        $submitCommentMessageLinkStyle = 'current_page';
+        $isLoggedIn = $this->isLoggedInFromSession();
+        $username = $this->usernameFromSession();
+
+
+        $name = filter_input(INPUT_POST, 'name', FILTER_SANITIZE_STRING);
+        $phone = filter_input(INPUT_POST, 'phone', FILTER_SANITIZE_STRING);
+        $comment = filter_input(INPUT_POST, 'comment', FILTER_SANITIZE_STRING);
+
+        $message1 = 'Thank You ' . $name;
+        $message4 = 'Your phone number is : ' . $phone;
+        $message5 = 'We will get back to you on your comment : ' . $comment;
+        // $message6='' .$password;
+
+
+        require_once __DIR__ . '/../templates/submitMessage.php';
+
+        //do this when submit button is clicked.
+    }
+
+     /**
+      * this function is loginAction()
+      * this is the method for log in
+      */
+
+    function loginAction()
+    {
+        $isLoggedIn = $this->isLoggedInFromSession();
+        $username = $this->usernameFromSession();
+
+        require_once __DIR__ . '/../templates/loginForm.php';
+    }
+
+
+    /**
+     * updateDetailsAction()
+     * this method updatesdetails from a session
+     */
+    public function updateDetailsAction()
+    {
+        $isLoggedIn = $this->isLoggedInFromSession();
+        $username = $this->usernameFromSession();
+
+        // get some data
+        //$positiontables = PositionTable::getAll();
+
+        // get the appropriate template to OUTPUT the data (in a nice way)
+        require_once __DIR__ . '/../templates/updateDetails.php';
+    }
+
+
+    /**
+     * processNewMemberAction() function
+     * this method is used for processing a new member
+     */
+
+    public function processNewMemberAction()
+    {
+        $name = filter_input(INPUT_POST,'name',FILTER_SANITIZE_STRING);
+        $handicap = filter_input(INPUT_POST,'handicap',FILTER_SANITIZE_STRING);
+        $teamName = filter_input(INPUT_POST,'teamName',FILTER_SANITIZE_STRING);
+
+        $t = new Player();
+        $t->setName($name);
+        $t->setHandicap($handicap);
+        $t->setTeamName($teamName);
+
+
+        Player::insert($t);
+
+        $this->updateDetailsAction();
+    }
+
+
+    /**
+     * this method is for logging out
+     * logoutAction() method
+     */
+
+    public function logoutAction()
+    {
+        // remove 'user' element from SESSION array
+        unset($_SESSION['user']);
+        $_SESSION['counter'] = 0;
+        // redirect to index action
+        $this->indexAction();
+    }
+
+    /**
+     * this method is for when logged into session
+     * isLoggedInFromSession() method
+     */
+    public function isLoggedInFromSession()
+    {
+        $isLoggedIn = false;
+
+        // user is logged in if there is a 'user' entry in the SESSION superglobal
+        if (isset($_SESSION['user'])) {
+            $isLoggedIn = true;
+        }
+
+        return $isLoggedIn;
+    }
+    /**
+     * this method is for the username from session
+     */
+
+    public function usernameFromSession()
+    {
+        $username = '';
+
+        // extract username from SESSION superglobal
+        if (isset($_SESSION['user'])) {
+            $username = $_SESSION['user'];
+        }
+
+        return $username;
+    }
+
+    /**
+     * this method processes the log in
+     */
+
+    public function processLoginAction()
+    {
+        // default is bad login
+        $isLoggedIn = false;
+
+        $username = filter_input(INPUT_POST, 'username', FILTER_SANITIZE_STRING);
+        $password = filter_input(INPUT_POST, 'password', FILTER_SANITIZE_STRING);
+
+        // search for user with username in repository
+        $isLoggedIn = User::canFindMatchingUsernameAndPassword($username, $password);
+
+        // action depending on login success
+        if ($isLoggedIn) {
+            // STORE login status SESSION
+            $_SESSION['user'] = $username;
+
+            require_once __DIR__ . '/../templates/loginSuccess.php';
+        } else {
+            $message = 'Bad Username or Password enter. Please Try Again';
+            require_once __DIR__ . '/../templates/message.php';
+        }
+    }
+}
+
+
+/**
+ * Created by PhpStorm.
+ * User: Gary
+ * Date: 09/03/2016
+ * Time: 15:33
+ */
